@@ -43,7 +43,8 @@ open http://localhost:4567/api/books
 
 ```
 aws ecr create-repository --repository-name books-api
-aws ecr get-login --no-include-email | sh
+aws ecr get-login --no-include-email | sh (AWS CLI v1)
+docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) <AWS-Account-id>.dkr.ecr.us-east-1.amazonaws.com   (AWS CLI V2)
 IMAGE_REPO=$(aws ecr describe-repositories --repository-names books-api --query 'repositories[0].repositoryUri' --output text)
 docker tag books-api:latest $IMAGE_REPO:v1
 docker push $IMAGE_REPO:v1
